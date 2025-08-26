@@ -16,6 +16,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  next();
+});
 
 mongoose.connect(URI)
   .then(() => console.log('✅ Connected to MongoDB ✅'))
@@ -70,6 +74,21 @@ app.post('/api/login', async (req, res) => {
     res.json({ token, role: user[0].role });
   } catch (error) {
     console.error('❌ Login error : ', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.get('/api/validate', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.sendStatus(401);
+  try {
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+      if (err) return res.sendStatus(401);
+      res.json({ email: user.email, role: user.role });
+    })
+  } catch (error) {
+    console.error('❌ Token validation error : ', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

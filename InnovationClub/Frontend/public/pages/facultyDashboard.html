@@ -4,12 +4,18 @@
   <meta charset="UTF-8">
   <title>Faculty Dashboard</title>
   <link rel="stylesheet" href="/style/main">
+  <script src="/js/main"></script>
 </head>
-<body>
+<body onload="validCheck()">
   <div class="container">
     <h2>Faculty Dashboard</h2>
     <div id="message" class="message">Welcome to faculty Dashboard</div>
+    <button onclick="logout()">Logout</button>
   </div>
-  <script src="/js/main"></script>
+  <script>
+    window.addEventListener('load', (event) => {
+      validCheck();
+    });
+  </script>
 </body>
 </html>

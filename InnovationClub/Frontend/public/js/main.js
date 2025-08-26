@@ -3,7 +3,7 @@ async function login() {
   const password = document.getElementById("password").value;
   const messageBox = document.getElementById("message");
   try {
-    const res = await fetch("http://localhost:6969/api/login", {
+    const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
@@ -35,4 +35,25 @@ async function login() {
     messageBox.innerText = "⚠️ Server not responding";
     messageBox.style.color = "red";
   }
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "/";
+}
+
+async function validCheck() {
+  const token = localStorage.getItem("token");
+  await fetch("/api/validate", {
+    method: "GET",
+    headers: { "Authorization": `Bearer ${token}` }
+  }).then(res => {
+    if (res.status === 401) {
+      alert("Session expired. Please log in again.");
+      logout();
+    }
+  }).catch(() => {
+    alert("⚠️ Server not responding");
+    logout();
+  });
 }
