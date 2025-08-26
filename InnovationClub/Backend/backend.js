@@ -21,7 +21,7 @@ app.use((req, res, next) => {
   next();
 });
 
-mongoose.connect(URI)
+mongoose.connect(URI, { dbName: "InnovationClub" })
   .then(() => console.log('✅ Connected to MongoDB ✅'))
   .catch(err => console.error('❌ MongoDB connection error : ', err));
 
