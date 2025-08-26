@@ -1,0 +1,14 @@
+# Node modules
+InnovationClub/node_modules/
+
+# Logs
+*.log
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+#Other files
+ProjectStructure.exe
+ProjectStructure.obj

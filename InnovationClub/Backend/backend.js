@@ -5,51 +5,75 @@ const cors = require('cors');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const Credentials = require("./src/models/model");
+require('dotenv').config();
+
+const SECRET_KEY = process.env.SECRET_KEY;
+const URI = process.env.URI.replace('<password>', process.env.PASSWORD);
+const PORT = process.env.PORT || 6969;
 
 const app = express();
-const SECRET_KEY = 'Evarra nuvvu erripukaaaa cjdsncjkdscdcnjnuY&^*^&#EY^&(#Ybudbyiwebd7h7HHW&GF&WEGF&*GFyewbvfhyBHGEfyugewryufgh7w4gfy::::""""';
-const URI = 'mongodb+srv://theshahidprofessional:1lD5nVDQkyhgfbuE@manadheidantaah.zkyuf0q.mongodb.net/?retryWrites=true&w=majority&appName=ManadheIdantaah';
 
 app.use(cors());
 app.use(express.json());
 
 mongoose.connect(URI)
   .then(() => console.log('✅ Connected to MongoDB ✅'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+  .catch(err => console.error('❌ MongoDB connection error : ', err));
 
 // Serve static files correctly (no manual headers needed)
 app.use(express.static(path.join(__dirname, "../Frontend/public")));
 
 // Routes
-app.get('/style/main', (req, res) => 
-  res.sendFile(path.join(__dirname, '../Frontend/public/css/main.css'))
-);
-app.get('/js/main', (req, res) => 
-  res.sendFile(path.join(__dirname, '../Frontend/public/js/main.js'))
+const cssRoot = path.join(__dirname, "../Frontend/public/css");
+const jsRoot = path.join(__dirname, "../Frontend/public/js");
+const pagesRoot = path.join(__dirname, "../Frontend/public/pages");
+
+// CSS
+app.get("/style/main", (req, res) =>
+  res.sendFile("main.css", { root: cssRoot })
 );
 
-app.get('/', (req, res) => 
-  res.sendFile(path.join(__dirname, '../Frontend/public/pages/login.html'))
+// JS
+app.get("/js/main", (req, res) =>
+  res.sendFile("main.js", { root: jsRoot })
 );
-app.get('/student/dashboard', (req, res) => 
-  res.sendFile(path.join(__dirname, '../Frontend/public/pages/studentDashboard.html'))
+
+// Pages
+app.get("/", (req, res) =>
+  res.sendFile("login.html", { root: pagesRoot })
 );
-app.get('/faculty/dashboard', (req, res) => 
-  res.sendFile(path.join(__dirname, '../Frontend/public/pages/facultyDashboard.html'))
+app.get("/student/dashboard", (req, res) =>
+  res.sendFile("studentDashboard.html", { root: pagesRoot })
 );
-app.get('/admin/dashboard', (req, res) => 
-  res.sendFile(path.join(__dirname, '../Frontend/public/pages/adminDashboard.html'))
+app.get("/faculty/dashboard", (req, res) =>
+  res.sendFile("facultyDashboard.html", { root: pagesRoot })
 );
+app.get("/admin/dashboard", (req, res) =>
+  res.sendFile("adminDashboard.html", { root: pagesRoot })
+);
+
 
 app.post('/api/login', async (req, res) => {
-  const { email, password } = req.body; // Simulated user data
-  if(email === "demo@test.com" && password === "password123") {
-    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '2h' });
-    const role = 'admin';
-    return res.status(200).json({ message: "Login successful", role, token });
+  const { email, password } = req.body;
+
+  try {
+    const user = await Credentials.find({ email });
+    if (user.length === 0) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user[0].password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    } 
+    const token = jwt.sign({ email: user[0].email, role: user[0].role }, SECRET_KEY, { expiresIn: '2h' });
+    res.json({ token, role: user[0].role });
+  } catch (error) {
+    console.error('❌ Login error : ', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-app.listen(6969, () => {
-  console.log('✅ Server is running at http://localhost:6969 ✅');
+app.listen(PORT, () => {
+  console.log('✅ Server is running at http://localhost:' + PORT + ' ✅');
 });

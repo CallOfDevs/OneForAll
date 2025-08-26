@@ -20,16 +20,15 @@ void printTree(const std::filesystem::path& p, std::string indent = "") {
         bool is_last = (&file == &files.back());
         std::string pointer = "|-- ";
         std::cout << indent << pointer << file.filename().string() << std::endl;
-        if(is_directory(file)) {
+        if(is_directory(file) && !is_symlink(file) && file.filename() != "node_modules" && file.filename() != ".vscode" && file.filename() != ".git") {
             std::string new_indent = indent + (is_last ? "    " : "|   ");
             printTree(file, new_indent);
         }
     }
-
 }
 
 int main() {
-    const std::string path = "D:/Programs/.vscode/";
+    const std::string path = "D:/Programs/.vscode/Web/OneForAll";
     std::cout << "Project Structure for: " << path << std::endl;
     printTree(path);
     std::cout << std::endl;
