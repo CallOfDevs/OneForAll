@@ -17,13 +17,15 @@ async function login() {
       return;
     }
 
+    localStorage.setItem("token", data.token);
+
     // ✅ Redirect based on role from backend
     if (data.role === "admin") {
-      window.location.href = "pages/adminDashboard.html";
+      window.location.href = "/admin/dashboard";
     } else if (data.role === "faculty") {
-      window.location.href = "pages/facultyDashboard.html";
+      window.location.href = "/faculty/dashboard";
     } else if (data.role === "student") {
-      window.location.href = "pages/studentDashboard.html";
+      window.location.href = "/student/dashboard";
     } else {
       messageBox.innerText = "Unknown role!";
       messageBox.style.color = "red";
