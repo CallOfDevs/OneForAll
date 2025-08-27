@@ -26,9 +26,9 @@ const insertMockCredentials = async () => {
 };
 
 mongoose
-  .connect(URI)
+  .connect(URI, { dbName: "InnovationClub" })
   .then(() => {
     console.log("✅ Connected to MongoDB ✅");
-    return insertMockCredentials(); // only call once
+    return insertMockCredentials();
   })
   .catch((err) => console.error("❌ MongoDB connection error:", err));
