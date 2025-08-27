@@ -6,7 +6,16 @@
   <link rel="stylesheet" href="/style/main">
   <script src="/js/main"></script>
 </head>
-<body onload="validCheck()">
+<body class="student-bg" onload="validCheck()">
+  <nav class="navbar">
+    <ul>
+      <li><a href="#">🏠 Home</a></li>
+      <li><a href="#">📂 Projects</a></li>
+      <li><a href="#">📝 Your Projects</a></li>
+    </ul>
+    <button class="logout" onclick="logout()">Logout</button>
+  </nav>
+
   <div class="dashboard">
     <h2>🎓 Student Dashboard</h2>
     <div class="message">Welcome, Student!</div>
@@ -15,8 +24,8 @@
       <li>Join teams & collaborate</li>
       <li>Upload final reports</li>
     </ul>
-    <button class="logout" onclick="logout()">Logout</button>
   </div>
+
   <script src="/js/main"></script>
 </body>
 

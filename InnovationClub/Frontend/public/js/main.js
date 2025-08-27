@@ -21,14 +21,14 @@ async function login() {
 
     // ✅ Redirect based on role from backend
     if (data.role === "admin") {
+      document.body.className = "admin-bg";
       window.location.href = "/admin/dashboard";
     } else if (data.role === "faculty") {
+      document.body.className = "faculty-bg";
       window.location.href = "/faculty/dashboard";
     } else if (data.role === "student") {
+      document.body.className = "student-bg";
       window.location.href = "/student/dashboard";
-    } else {
-      messageBox.innerText = "Unknown role!";
-      messageBox.style.color = "red";
     }
 
   } catch (error) {
@@ -57,3 +57,8 @@ async function validCheck() {
     logout();
   });
 }
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    login();
+  }
+})
