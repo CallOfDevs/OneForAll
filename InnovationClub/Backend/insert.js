@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const Credentials = require("./src/models/model");
+require("dotenv").config();
 
-const URI =
-  "mongodb+srv://theshahidprofessional:1lD5nVDQkyhgfbuE@manadheidantaah.zkyuf0q.mongodb.net/?retryWrites=true&w=majority&appName=ManadheIdantaah";
+const URI = process.env.URI.replace("<password>", process.env.PASSWORD).toString();
 
 const insertMockCredentials = async () => {
   try {

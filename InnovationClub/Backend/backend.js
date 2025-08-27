@@ -9,7 +9,7 @@ const Credentials = require("./src/models/model");
 require('dotenv').config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
-const URI = process.env.URI.replace('<password>', process.env.PASSWORD);
+const URI = process.env.URI.replace("<password>", process.env.PASSWORD).toString();
 const PORT = process.env.PORT || 6969;
 
 const app = express();
@@ -82,7 +82,7 @@ app.post('/api/login', async (req, res) => {
 
 app.get('/api/validate', (req, res) => {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = authHeader?.split(' ')[1];
   if (!token) return res.sendStatus(401);
   try {
     jwt.verify(token, SECRET_KEY, (err, user) => {
@@ -96,5 +96,5 @@ app.get('/api/validate', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('✅ Server is running at http://localhost:' + PORT + ' ✅');
+  console.log(`✅ Server is running at http://localhost:${PORT} ✅`);
 });
