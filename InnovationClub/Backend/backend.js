@@ -60,13 +60,15 @@ app.get("/admin/dashboard", (req, res) =>
 
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
-
+  console.log("Login attempt:", email, password);
   try {
     const user = await Credentials.find({ email });
+    console.log("User from DB:", user);
     if (user.length === 0) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
     const isPasswordValid = await bcrypt.compare(password, user[0].password);
+    console.log("Password valid?:", isPasswordValid);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password' });
     } 

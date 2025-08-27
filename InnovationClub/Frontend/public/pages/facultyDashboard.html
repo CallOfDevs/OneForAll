@@ -7,15 +7,17 @@
   <script src="/js/main"></script>
 </head>
 <body onload="validCheck()">
-  <div class="container">
-    <h2>Faculty Dashboard</h2>
-    <div id="message" class="message">Welcome to faculty Dashboard</div>
-    <button onclick="logout()">Logout</button>
+  <div class="dashboard">
+    <h2>👨‍🏫 Faculty Dashboard</h2>
+    <div class="message">Welcome, Faculty!</div>
+    <ul>
+      <li>Review student project ideas</li>
+      <li>Approve/Reject proposals</li>
+      <li>Track milestones</li>
+    </ul>
+    <button class="logout" onclick="logout()">Logout</button>
   </div>
-  <script>
-    window.addEventListener('load', (event) => {
-      validCheck();
-    });
-  </script>
+  <script src="/js/main"></script>
 </body>
+
 </html>

@@ -1,49 +1,116 @@
+/* General body setup */
 body {
     font-family: Arial, sans-serif;
     background: #f4f4f9;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Smooth fade-in animation for all containers */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Shared container for Login & Dashboards */
+.container, .dashboard {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Login form container */
 .container {
     max-width: 400px;
-    margin: 60px auto;
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
 }
 
+/* Dashboard container */
+.dashboard {
+    max-width: 800px;
+    width: 90%;
+}
+
+/* Headings */
 h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
+    color: #2c3e50;
+    font-size: 24px;
 }
 
+/* Inputs & buttons */
 input, button {
     width: 100%;
     padding: 12px;
-    margin: 8px 0;
+    margin: 10px 0;
     border-radius: 6px;
     border: 1px solid #ccc;
     font-size: 14px;
+    transition: 0.3s;
 }
 
+input:focus {
+    border-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
+}
+
+/* Primary button */
 button {
     background: #4caf50;
     color: white;
     border: none;
     cursor: pointer;
     font-weight: bold;
-    transition: 0.3s;
 }
 
 button:hover {
     background: #45a049;
+    transform: scale(1.02);
 }
 
+/* Logout button (different color) */
+button.logout {
+    background: #e74c3c;
+}
+
+button.logout:hover {
+    background: #c0392b;
+}
+
+/* Feedback message */
 .message {
     margin-top: 15px;
     text-align: center;
     font-weight: bold;
+    color: #333;
+}
+
+/* Dashboard features list */
+.dashboard ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.dashboard ul li {
+    background: #f9f9f9;
+    margin: 8px 0;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border-left: 5px solid #4caf50;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.dashboard ul li:hover {
+    background: #eafbea;
+    transform: translateX(5px);
 }

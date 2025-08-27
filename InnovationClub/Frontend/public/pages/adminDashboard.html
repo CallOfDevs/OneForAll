@@ -6,16 +6,18 @@
   <link rel="stylesheet" href="/style/main">
   <script src="/js/main"></script>
 </head>
-<body>
-  <div class="container">
-    <h2>Admin Dashboard</h2>
-    <div id="message" class="message">Welcome to admin Dashboard</div>
-    <button onclick="logout()">Logout</button>
+<body onload="validCheck()">
+  <div class="dashboard">
+    <h2>⚙️ Admin Dashboard</h2>
+    <div class="message">Welcome, Admin!</div>
+    <ul>
+      <li>Manage students & faculty accounts</li>
+      <li>Monitor project submissions</li>
+      <li>System overview & reports</li>
+    </ul>
+    <button class="logout" onclick="logout()">Logout</button>
   </div>
-   <script>
-    window.addEventListener('load', (event) => {
-      validCheck();
-    });
-  </script>
+  <script src="/js/main"></script>
 </body>
+
 </html>
