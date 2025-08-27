@@ -60,19 +60,18 @@ app.get("/admin/dashboard", (req, res) =>
 
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
-  console.log("Login attempt:", email, password);
+  console.log("Login attempt");
   try {
     const user = await Credentials.find({ email });
-    console.log("User from DB:", user);
     if (user.length === 0) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
     const isPasswordValid = await bcrypt.compare(password, user[0].password);
-    console.log("Password valid?:", isPasswordValid);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password' });
     } 
     const token = jwt.sign({ email: user[0].email, role: user[0].role }, SECRET_KEY, { expiresIn: '2h' });
+    console.log('✅ Login successful : ', email);
     res.json({ token, role: user[0].role });
   } catch (error) {
     console.error('❌ Login error : ', error);
@@ -83,10 +82,12 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/validate', (req, res) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader?.split(' ')[1];
+  console.log("Token validation attempt");
   if (!token) return res.sendStatus(401);
   try {
     jwt.verify(token, SECRET_KEY, (err, user) => {
       if (err) return res.sendStatus(401);
+      console.log('✅ Token valid for : ', user.email);
       res.json({ email: user.email, role: user.role });
     })
   } catch (error) {
