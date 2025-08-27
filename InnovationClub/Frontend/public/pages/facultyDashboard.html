@@ -6,18 +6,38 @@
   <link rel="stylesheet" href="/style/main">
   <script src="/js/main"></script>
 </head>
-<body onload="validCheck()">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Dashboard</title>
+  <link rel="stylesheet" href="/style/main">
+</head>
+<body class="faculty-bg" onload="validCheck()">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="#" class="active">🏠 Home</a></li>
+      <li><a href="#">📂 Projects</a></li>
+      <li><a href="#">📝 Your Projects</a></li>
+    </ul>
+    <button class="logout" onclick="logout()">Logout</button>
+  </nav>
+
+  <!-- Dashboard Content -->
   <div class="dashboard">
     <h2>👨‍🏫 Faculty Dashboard</h2>
     <div class="message">Welcome, Faculty!</div>
     <ul>
-      <li>Review student project ideas</li>
-      <li>Approve/Reject proposals</li>
-      <li>Track milestones</li>
+      <li>Review student project submissions</li>
+      <li>Approve or reject proposals</li>
+      <li>Track project milestones & progress</li>
     </ul>
-    <button class="logout" onclick="logout()">Logout</button>
   </div>
+
   <script src="/js/main"></script>
 </body>
+</html>
 
 </html>
